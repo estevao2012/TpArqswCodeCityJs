@@ -1,11 +1,21 @@
-if (process.argv.length < 3) {
-    console.log('Usage: analyze.js file.js');
-    process.exit(1);
-}
+// Class
+var City 			   = require('./core/city/city.js'),
+		Neighborhood = require('./core/city/neighborhood.js');
+
+// Custom Services
+var parser     = require('./core/services/parser.js');
+var readerFile = require('./core/services/reader_file.js');
+var reader     = new readerFile();
 
 
-var filename = process.argv[2];
-console.log('Reading ' + filename);
-var code = fs.readFileSync(filename);
-analyzeCode(code);
+var code = reader.readInput();
+var ast  = parser.parseCode(code);
+
+// Identify files
+neighbor = new Neighborhood(process.argv[2], code, ast);
+
+// Mensure Metrics By File
+console.log(neighbor.show());
+
+// Draw Objects By File
 console.log('Done');
