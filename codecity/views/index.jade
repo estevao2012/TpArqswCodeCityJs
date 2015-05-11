@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  div
+    -city.getNeighbors().forEach(function(neighborhood, index){
+      -neighborhood.getBuilds().forEach(function(build, index){
+        p= build.getNumVar()
+        p= build.getNumFunc()
+      -})
+    -});

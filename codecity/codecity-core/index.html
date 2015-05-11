@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>JSCity</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/mootools/1.5.1/mootools-yui-compressed.js"></script>
+	<script src="https://cdn.rawgit.com/jquery/esprima/1.2/esprima.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+//<![CDATA[
+(function($, $$){
+	var c, q, codes = {
+		'vazio':'',
+		'42': "var n = 42;\nif(n) console.log('eureka!')"
+	};
+	function getCode(src) {
+		if(typeof(src)=='undefined' || src=='') {
+			src = '';
+			$$('script').each(function(s) {
+				src += s.get('text');
+			});
+			c.set('value', src);
+			c.fireEvent('input');
+		} else {
+			if(typeof(codes[src])=='string') {
+				c.set('value', codes[src]);
+				c.fireEvent('input');
+			} else {
+				new Request({
+					'url': src,
+					'method': 'get',
+					'onSuccess': function (txt) {
+						c.set('value', txt);
+						c.fireEvent('input');
+					}
+				}).send();
+			}
+		}
+	}
+	window.getCode = getCode;
+	window.addEvent('domready', function() {
+		c = $('codigo');
+		codes['original'] = c.get('value');
+		q = $('quadro');
+		function counter(val) {
+			var r = {}, s, t;
+			switch(typeOf(val)) {
+				case 'object':
+				if(typeof(val['type'])=='string') {
+					t = val['type'];
+					if(typeof(r[t])=='undefined') {
+						r[t] = 1;
+					} else {
+						++r[t];
+					}
+				}
+				Object.each(val, function(e) {
+					Object.each(counter(e), function(e, i) {
+						if(typeof(r[i])=='undefined') {
+							r[i] = 0;
+						}
+						r[i] += e;
+					});
+				});
+				break;
+				case 'array':
+				val.each(function (e) {
+					Object.each(counter(e), function(e, i) {
+						if(typeof(r[i])=='undefined') {
+							r[i] = 0;
+						}
+						r[i] += e;
+					});
+				});
+				break;
+				default:
+//console.log(typeOf(val));
+}
+return r;
+}
+function atualiza() {
+	var val = esprima.parse(c.get('value')), dados = {}, vis, ld = [], ll = [], escala;
+	dados = counter(val);
+	ll = Object.keys(dados);
+	ld = Object.values(dados);
+	q.set('text', 'Contados:\n'+JSON.stringify(dados, null, '\t') + '\n\nAST:\n' + JSON.stringify(val, null, '\t'));
+	$('vis').empty();
+	escala = d3.scale.linear()
+	.domain([0, d3.max(ld)])
+	.range([0, 100]);
+	vis = d3.select("#vis");
+	vis.selectAll("div")
+	.data(ld)
+	.enter().append('div')
+	.style("width", function(d) { return escala(d) + "%"; })
+	.text(function(d, i) { return ll[i]; });
+}
+c.addEvent('input', atualiza);
+c.addEvent('blur', atualiza);
+atualiza();
+});
+})(document.id, document.getElements);
+//]]>
+</script>
+<style type="text/css">
+	pre {
+		-webkit-tab-size:3;
+		-o-tab-size:3;
+		-ms-tab-size:3;
+		-moz-tab-size:3;
+		tab-size:3;
+	}
+	textarea {
+		display: block;
+		/*height: 18em; chrome e opera ignoram min-height*/
+		margin: 0 auto;
+		min-height:9em;
+		min-width:50%;
+	}
+	.grafico {
+		background-color: #DDF;
+		border: 1px solid #77F;
+		padding: 1em;
+	}
+	.grafico div {
+		background-color: #44F;
+		border: 1px solid #88F;
+		box-sizing: border-box;
+		color:#F33;
+		margin: 0 auto;
+		text-align: center;
+		text-shadow: 0px 0px 5px #44F;
+	}
+</style>
+</head>
+<body>
+	<div id="tudo">
+<!--ul>
+<li onclick="getCode('https://cdnjs.cloudflare.com/ajax/libs/mootools/1.5.1/mootools-core-full-nocompat.min.js')">Mootools</li>
+</ul-->
+<button onclick="getCode('original')">código original</button>
+<button onclick="getCode('42')">código 42</button>
+<button onclick="getCode()">código daqui</button>
+<button onclick="getCode('vazio')">código vazio</button>
+<pre>
+	<textarea id="codigo"><![CDATA["use strict";
+
+		var i=0, t=0, o = {p:{q:{r:'s'}}};
+
+		function log(msg, n) {
+		console.log(msg);
+		return n;
+	}
+
+	for(i=0,t=10; i<t; ++i) {
+	log(i);
+}
+log(o.p.q.r);
+]]></textarea>
+<div id="vis" class="grafico"></div>
+<div id="quadro">...</div>
+</pre>
+</div>
+</body>
+</html>
