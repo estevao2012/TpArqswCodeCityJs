@@ -7,6 +7,7 @@ block content
     -var horizontal_position    = 0;
     -var vertical_position      = 0;
     -var before_horizontal_size = 0;
+    
     -city.getNeighbors().forEach(function(neighbor, i){
       -buildings = neighbor.getMatrizBuildings();
       -for(i=0; i < neighbor.num_buildings_per_line(); i++){
@@ -16,7 +17,7 @@ block content
           -if(buildings[i][j] !== undefined){
             -build = buildings[i][j];
             -side  = build.side() * 10;
-            ="add_cube(" + (side) + "," + (build.height() * 2)  + ", " + (side) + ", " + horizontal_position + ", " + vertical_position + ", 4  );"
+            ="add_cube(" + (side) + "," + (build.height() * 2)  + ", " + (side) + ", " + horizontal_position + ", " + vertical_position + ", 0);"
             -horizontal_position += (side) + 10;
             -if(before_horizontal_size < side) before_horizontal_size = side;
           -}
