@@ -7,6 +7,7 @@ module.exports = {
 			// Custom Services
 			var parser     = require('./core/services/parser.js');
 			var readerFile = require('./core/services/reader_file.js');
+			
 			var reader     = new readerFile();
 
 			var code = reader.readInput(file);

@@ -7,7 +7,7 @@
 6 error If you need help, you may report this *entire* log,
 6 error including the npm and node versions, at:
 6 error     <http://github.com/npm/npm/issues>
-7 error System Linux 3.13.0-51-generic
+7 error System Linux 3.13.0-52-generic
 8 error command "/usr/bin/node" "/usr/bin/npm" "start"
 9 error cwd /home/estevao/Workspace/UFMG/ARQSW/Tp
 10 error node -v v0.10.37

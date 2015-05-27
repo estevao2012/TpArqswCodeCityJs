@@ -1,4 +1,4 @@
-module.exports =  function Building(_type, _id, _params, _ast, _level){
+module.exports =  function Building(_type, _id, _params, _ast, _level, _loc){
 
 	var moo = require('mootools');
 
@@ -6,13 +6,13 @@ module.exports =  function Building(_type, _id, _params, _ast, _level){
 	var self  	 = this;
 	var id 		   = _id;
 	var params   = _params;
-	var ast    	 = _ast;
 	var type  	 = _type;
-	self.level   = _level;
+	var ast      = _ast;
+	var level   = _level;
 	
 	//Atributes
 	var num_var  = 0;
-	var loc      = 0;
+	var loc      = _loc;
 	var metrics  = {
 		"VariableDeclaration" : 0,
 		"VariableDeclarator" : 0,
@@ -32,11 +32,15 @@ module.exports =  function Building(_type, _id, _params, _ast, _level){
 	}
 
 	self.getLevel = function(){
-		return self.level;
+		return level;
+	}
+
+	self.getFunctionsDeclared = function(){
+		return metrics["FunctionExpression"] + metrics["FunctionDeclaration"];
 	}
 
 	self.getNumVar = function(){
-		return num_var;
+		return metrics["VariableDeclarator"];
 	}
 
 	self.getLoc = function(){
@@ -45,7 +49,15 @@ module.exports =  function Building(_type, _id, _params, _ast, _level){
 
 	var process = function(){
 		metrics = counter(ast);
-		// console.log(metrics);
+		console.log(metrics);
+	}
+
+	self.side = function(){
+		return self.getNumVar();
+	}
+
+	self.height = function(){
+		return self.getLoc();
 	}
 
 	var counter = function(val) {  	
@@ -67,9 +79,13 @@ module.exports =  function Building(_type, _id, _params, _ast, _level){
 						if(typeof(r[i])=='undefined') {
 							r[i] = 0;
 						}
+
 						r[i] += ev;
+
 					});
 				});
+				
+
 			break;
 			case 'array':
 				val.each(function (e) {
