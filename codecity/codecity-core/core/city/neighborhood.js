@@ -1,10 +1,9 @@
-module.exports = function Neighborhood(_filename, _code, _ast){
+module.exports = function Neighborhood(_code, _ast){
 	var moo = require('mootools');
 
 	var Building = require('./building.js');
 	var self  = this;
 
-	var name  = _filename;
 	var ast   = _ast;
 	var code  = _code;
 
