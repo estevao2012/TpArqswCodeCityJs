@@ -12,8 +12,6 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 	var rest_code 			 = [];
 	var matriz_buildings = [];
 
-	self.width  = 0;
-	self.height = 0;
 
 	self.show = function(){
 		return buildings;
@@ -26,8 +24,6 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 	var process = function(){
 		identify_functions(ast, 0);
 		matriz_buildings = position_buildings();
-		self.width  = width_neighborhood();
-		self.height = height_neighborhood();
 	}
 
 	var identify_functions = function(val, nivel){
@@ -50,56 +46,30 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		return r;
 	}
 
-	var num_buildings_per_line = function(){
+	self.num_buildings_per_line = function(){
 		return Math.ceil(buildings.length/2);
 	}
 
 	var position_buildings = function(){
-		var num_buildings  = num_buildings_per_line();
+		var num_buildings  = self.num_buildings_per_line();
 		var matriz_predios = [];
+		var pointer = 0;
+
 		for(i = 0; i < num_buildings; i++){
 			matriz_predios[i] = [];
 			for(j = 0; j < num_buildings; j++ ){
-				matriz_predios[i].push(buildings[(i+j)]);
+				if(pointer < buildings.length){
+					matriz_predios[i][j] = buildings[pointer];
+					pointer++;
+				}
 			}
 		}
+
 		return matriz_predios;
 	}
 
-	var width_neighborhood = function(){
-		var sum 		= 0;
-		var max_sum = 0;
-
-		for(i = 0; i < num_buildings_per_line(); i++){
-			sum = 0;
-			for(j = 0; j < num_buildings_per_line(); j++){
-				sum += matriz_buildings[i][j].getNumVar();
-			}
-
-			if(sum > max_sum) max_sum = sum;
-		}
-
-		return max_sum;
-	}
-
-	var height_neighborhood = function(){
-		var sum 		= 0;
-		var max_sum = 0;
-
-		for(i = 0; i < num_buildings_per_line(); i++){
-			sum = 0;
-			for(j = 0; j < num_buildings_per_line(); j++){
-				sum += matriz_buildings[j][i].getNumVar();
-			}
-
-			if(sum > max_sum) max_sum = sum;
-		}
-
-		return max_sum;
-	}
-
 	self.getMatrizBuildings = function(){
-		return maxtriz_buildings;
+		return matriz_buildings;
 	}
 
 	var init = function(){
