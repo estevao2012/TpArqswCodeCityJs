@@ -58,7 +58,7 @@ function render()
 	renderer.render( scene, camera );
 }
 
-function add_cube(largura, altura, profundidade, posx, posz, relative){
+function add_cube(largura, altura, profundidade, level, posx, posz, relative){
 
 	var set_position_top_left = function(posx, posz){
 		var _posx = ((-FLOOR_WIDTH/2)+largura) + posx;
@@ -106,7 +106,7 @@ function add_cube(largura, altura, profundidade, posx, posz, relative){
 	if(relative == 3) pos_base = set_position_bottom_right(posx, posz);
 	if(relative == 4) pos_base = set_position_center(posx, posz);
 
-	var color = getRandomColor();
+	var color = getRandomColor(level);
 	// Create an array of materials to be used in a cube, one for each side
 	var cubeMaterialArray = [];
 	// order to add materials: x+,x-,y+,y-,z+,z-
@@ -128,11 +128,18 @@ function add_cube(largura, altura, profundidade, posx, posz, relative){
 	scene.add( cube );		
 }
 
-function getRandomColor() {
+function getRandomColor(level) {
+		level = level+1;
     var letters = '0123456789ABCDEF'.split('');
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
+    var color = '#1020';
+    for (var i = 0; i < 2; i++ ) {
+    		result = Math.floor(level * 2);
+    		letra  = letters[result];
+    		cont   = 1;
+    		if(letra === undefined){
+    			letra = letters[ (letters.length-1) ];
+    		}
+        color += letra;
     }
     return color;
 }

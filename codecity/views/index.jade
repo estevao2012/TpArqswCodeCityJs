@@ -17,7 +17,8 @@ block content
           -if(buildings[i][j] !== undefined){
             -build = buildings[i][j];
             -side  = build.side() * 10;
-            ="add_cube(" + (side) + "," + (build.height() * 2)  + ", " + (side) + ", " + horizontal_position + ", " + vertical_position + ", 0);"
+            ="console.log('"+build.getLevel()+"');"
+            ="add_cube(" + (side) + "," + (build.height() * 2)  + ", " + (side) + ", " + (build.getLevel()) + ", " + horizontal_position + ", " + vertical_position + ", 4);"
             -horizontal_position += (side) + 10;
             -if(before_horizontal_size < side) before_horizontal_size = side;
           -}
