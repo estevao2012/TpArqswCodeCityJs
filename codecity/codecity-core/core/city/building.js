@@ -40,7 +40,10 @@ module.exports =  function Building(_type, _id, _params, _ast, _level, _loc){
 	}
 
 	self.getNumVar = function(){
-		return metrics["VariableDeclarator"];
+		if(metrics["VariableDeclarator"] !== undefined)
+			return metrics["VariableDeclarator"];
+		else
+			return 1;
 	}
 
 	self.getLoc = function(){
@@ -49,7 +52,6 @@ module.exports =  function Building(_type, _id, _params, _ast, _level, _loc){
 
 	var process = function(){
 		metrics = counter(ast);
-		console.log(metrics);
 	}
 
 	self.side = function(){

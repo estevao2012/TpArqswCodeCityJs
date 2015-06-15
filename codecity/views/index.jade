@@ -4,25 +4,39 @@ block content
   div(id="ThreeJS",style="z-index: 1; position: absolute; left:0px; top:0px")
   script
     $(function(){
+
     -var horizontal_position    = 0;
     -var vertical_position      = 0;
-    -var before_horizontal_size = 0;
+    -var max_size               = 0;
     
-    -city.getNeighbors().forEach(function(neighbor, i){
+    -city.getNeighbors().forEach(function(neighbor, inos){
+      
       -buildings = neighbor.getMatrizBuildings();
-      -for(i=0; i < neighbor.num_buildings_per_line(); i++){
-        -horizontal_position = 0;
-        -vertical_position += before_horizontal_size + 10;
-        -for(j=0; j < neighbor.num_buildings_per_line(); j++){
+      -for( i = 0; i < neighbor.num_buildings_per_line(); i++ ){
+        
+
+        -for( j = 0; j < neighbor.num_buildings_per_line(); j++ ){
+
           -if(buildings[i][j] !== undefined){
-            -build = buildings[i][j];
-            -side  = build.side() * 10;
-            ="console.log('"+build.getLevel()+"');"
-            ="add_cube(" + (side) + "," + (build.height() * 2)  + ", " + (side) + ", " + (build.getLevel()) + ", " + horizontal_position + ", " + vertical_position + ", 4);"
-            -horizontal_position += (side) + 10;
-            -if(before_horizontal_size < side) before_horizontal_size = side;
+            -build  = buildings[i][j];
+            -side   = build.side();
+            -height = build.height() * 2;
+            -level  = build.getLevel();
+
+            ="add_cube(" + side + "," + height  + ", " + side + ", " + level + ", " + horizontal_position + ", " + vertical_position + ", 0);"
+            -horizontal_position += side + 5;
+
+            -if(max_size < side) max_size = side;
           -}
+
         -}
+
+      -horizontal_position = 0;
+      -vertical_position  += max_size + 10;
+      -max_size            = 0;
+
       -}
+
     -});
+
     })

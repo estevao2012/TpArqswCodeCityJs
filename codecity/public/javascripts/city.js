@@ -2,8 +2,6 @@
 // MAIN //
 //////////
 
-var blue = "#3591ac";
-
 // standard global variables
 var container, scene, camera, renderer, controls, stats;
 
@@ -61,33 +59,33 @@ function render()
 function add_cube(largura, altura, profundidade, level, posx, posz, relative){
 
 	var set_position_top_left = function(posx, posz){
-		var _posx = ((-FLOOR_WIDTH/2)+largura) + posx;
+		var _posx = ((-FLOOR_WIDTH/2)+(largura/2)) + posx;
 		var _posy =  altura/2;
-		var _posz = ((-FLOOR_HEIGHT/2)+profundidade) + posz;
+		var _posz = ((-FLOOR_HEIGHT/2)+(profundidade/2)) + posz;
 
 		return [_posx, _posy, _posz];
 	} 
 
 	var set_position_bottom_left = function(_posx, _posz){
-		var _posx = ((-FLOOR_WIDTH/2)+largura) + _posx;
+		var _posx = ((-FLOOR_WIDTH/2)+(largura/2)) + _posx;
 		var _posy =  altura/2;
-		var _posz = ((FLOOR_HEIGHT/2)-profundidade) - _posz;
+		var _posz = ((FLOOR_HEIGHT/2)-(profundidade/2)) - _posz;
 
 		return [_posx, _posy, _posz];
 	} 
 
 	var set_position_top_right = function(_posx, _posz){
-		var _posx = ((FLOOR_WIDTH/2)-largura) - _posx;
+		var _posx = ((FLOOR_WIDTH/2)-(largura/2)) - _posx;
 		var _posy =  altura/2;
-		var _posz = ((-FLOOR_HEIGHT/2)+profundidade) + _posz;
+		var _posz = ((-FLOOR_HEIGHT/2)+(profundidade/2)) + _posz;
 
 		return [_posx, _posy, _posz];
 	} 
 
 	var set_position_bottom_right = function(_posx, _posz){
-		var _posx = ((FLOOR_WIDTH/2)-largura) - _posx;
+		var _posx = ((FLOOR_WIDTH/2)-(largura/2)) - _posx;
 		var _posy =  altura/2;
-		var _posz = ((FLOOR_HEIGHT/2)-profundidade) - _posz;
+		var _posz = ((FLOOR_HEIGHT/2)-(profundidade/2)) - _posz;
 
 		return [_posx, _posy, _posz];
 	} 
@@ -235,7 +233,7 @@ function configure_floor_sky(){
 	///////////
 	
 	// note: 4x4 checkboard pattern scaled so that each square is 25 by 25 pixels.
-	var floorTexture = new THREE.ImageUtils.loadTexture( 'images/checkerboard.jpg' );
+	var floorTexture = new THREE.ImageUtils.loadTexture( 'images/gray.png' );
 	floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
 	floorTexture.repeat.set( 10, 10 );
 	// DoubleSide: render texture on both sides of mesh

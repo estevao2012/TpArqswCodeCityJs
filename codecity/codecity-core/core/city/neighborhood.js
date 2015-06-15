@@ -21,6 +21,10 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		return buildings;
 	}
 
+	self.getName = function(){
+		return name;
+	}
+
 	var process = function(){
 		identify_functions(ast, 0);
 		matriz_buildings = position_buildings();
