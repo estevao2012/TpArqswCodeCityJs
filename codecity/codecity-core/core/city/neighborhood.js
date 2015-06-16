@@ -21,6 +21,10 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		return buildings;
 	}
 
+	self.getNumBuildings = function(){
+		return buildings.length;
+	}
+
 	self.getName = function(){
 		return name;
 	}
@@ -54,6 +58,26 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		return Math.ceil(buildings.length/2);
 	}
 
+	self.num_lines_of_neighbor = function(){
+		var buildings   = matriz_buildings;
+		var count_lines = 0;
+		var success     = false;
+		for( i = 0; i < self.num_buildings_per_line(); i++ ){
+		  success = false;
+
+		  for( j = 0; j < self.num_buildings_per_line(); j++ ){
+		  	if(buildings[i][j] !== undefined){
+		  		success = true;
+		  	}
+		  }
+
+		  if(success) count_lines++;
+
+		}
+
+		return count_lines;
+	}
+
 	var position_buildings = function(){
 		var num_buildings  = self.num_buildings_per_line();
 		var matriz_predios = [];
@@ -73,9 +97,10 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 	}
 
 	self.getWidth = function(){
-		var buildings = matriz_buildings;
-		var sum_width = 0;
+		var buildings  = matriz_buildings;
+		var sum_width  = 0;
 		var line_width = 0;
+
 		for( i = 0; i < self.num_buildings_per_line(); i++ ){
 			
 			line_width = 0;
@@ -89,6 +114,8 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		  if(line_width > sum_width) sum_width = line_width;
 		}
 
+		console.log(sum_width);
+
 		return sum_width;
 	}
 
@@ -97,6 +124,7 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		var buildings = matriz_buildings;
 		var sum_width = 0;
 		var line_width = 0;
+
 		for( i = 0; i < self.num_buildings_per_line(); i++ ){
 			line_width = 0;
 		  for( j = 0; j < self.num_buildings_per_line(); j++ ){
@@ -108,6 +136,7 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		  if(line_width > sum_width) sum_width = line_width;
 		}
 
+		console.log(sum_width);
 		return sum_width;
 	}
 

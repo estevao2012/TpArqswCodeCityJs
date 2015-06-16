@@ -21,7 +21,11 @@ router.get('/', function(req, res, next) {
 	//     }
 	// });
 	
-	p = project_folders + "/jquery/src/";
+	//Jquery
+	p = project_folders + "/Respond/src/";
+
+
+
 	var fs = require('fs');
 
 	var walk = function(dir, done) {
@@ -65,14 +69,8 @@ router.get('/', function(req, res, next) {
 	  		console.log(e);
 	  	}
 	  });
-	 	// console.log(city.getNeighbors());
   	res.render('index', { title: 'Express', city: city });
   });
-
-
-
-
-
 });
 
 module.exports = router;

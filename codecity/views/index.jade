@@ -26,12 +26,15 @@ block content
         -max_width_neighbor = neighbor.getWidth();
       -}
 
-
+      -num_buildings_per_line = neighbor.num_buildings_per_line()
+      -num_lines_of_neighbor  = neighbor.num_lines_of_neighbor()
 
       -for( i = 0; i < neighbor.num_buildings_per_line(); i++ ){
         -for( j = 0; j < neighbor.num_buildings_per_line(); j++ ){
           -if(i == 0 && j == 0){
-            ="add_neighbor(" + (neighbor.getWidth() + 4) + "," + 0.2 + ", " + (neighbor.getHeight() + 4) + ",  0, " + (horizontal_position - 2) + ", " + (vertical_position - 2) + ", 0);"
+            -width_neightbor = (neighbor.getWidth() + (num_buildings_per_line * 6));
+            -height_neightbor = (neighbor.getHeight() + (num_lines_of_neighbor * 6));
+            ="add_neighbor(" + width_neightbor + "," + 0.2 + ", " + height_neightbor + ",  0, " + horizontal_position + ", " + vertical_position + ", 0);"
           -}
 
           -if(buildings[i][j] !== undefined){
@@ -41,7 +44,7 @@ block content
             -level  = build.getLevel();
 
             ="add_cube(" + side + "," + height  + ", " + side + ", " + level + ", " + horizontal_position + ", " + vertical_position + ", 0);"
-            -horizontal_position += side + 5;
+            -horizontal_position += (side + 6);
 
             -if(max_size < side) max_size = side;
           -}
@@ -49,10 +52,11 @@ block content
         -}
 
       -horizontal_position = base_horizontal_line_pos;
-      -vertical_position  += max_size + 10;
+      -vertical_position  += (max_size + 6);
       -max_size            = 0;
 
       -}
+      -vertical_position  += 10;
 
     -});
 

@@ -13,7 +13,6 @@ module.exports = {
 			var ast  = parser.parseCode(code);
 
 			// Identify files
-
 			return new Neighborhood(file, code, ast);
     }
 }
