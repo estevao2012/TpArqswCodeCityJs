@@ -1,5 +1,5 @@
 module.exports = {
-    execute: function(city, file) {
+    execute: function(file) {
 			// Class
 			var Neighborhood = require('./core/city/neighborhood.js');
 
@@ -13,9 +13,8 @@ module.exports = {
 			var ast  = parser.parseCode(code);
 
 			// Identify files
-			city.addNeighborhood(new Neighborhood(file, code, ast));
 
-			return city;
+			return new Neighborhood(file, code, ast);
     }
 }
 

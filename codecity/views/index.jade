@@ -5,17 +5,34 @@ block content
   script
     $(function(){
 
-    -var horizontal_position    = 0;
-    -var vertical_position      = 0;
-    -var max_size               = 0;
+    -var horizontal_position      = 0;
+    -var vertical_position        = 0;
+    -var max_size                 = 0;
+    -var max_width_neighbor       = 0;
+    -var base_horizontal_line_pos = 0;
+
     
     -city.getNeighbors().forEach(function(neighbor, inos){
       
       -buildings = neighbor.getMatrizBuildings();
-      -for( i = 0; i < neighbor.num_buildings_per_line(); i++ ){
-        
 
+      -if(vertical_position > 1000 ){
+        -base_horizontal_line_pos += max_width_neighbor;
+        -vertical_position = 0;
+        -max_width_neighbor = 0;
+      -} 
+
+      -if(neighbor.getWidth() > max_width_neighbor){
+        -max_width_neighbor = neighbor.getWidth();
+      -}
+
+
+
+      -for( i = 0; i < neighbor.num_buildings_per_line(); i++ ){
         -for( j = 0; j < neighbor.num_buildings_per_line(); j++ ){
+          -if(i == 0 && j == 0){
+            ="add_neighbor(" + (neighbor.getWidth() + 4) + "," + 0.2 + ", " + (neighbor.getHeight() + 4) + ",  0, " + (horizontal_position - 2) + ", " + (vertical_position - 2) + ", 0);"
+          -}
 
           -if(buildings[i][j] !== undefined){
             -build  = buildings[i][j];
@@ -31,7 +48,7 @@ block content
 
         -}
 
-      -horizontal_position = 0;
+      -horizontal_position = base_horizontal_line_pos;
       -vertical_position  += max_size + 10;
       -max_size            = 0;
 

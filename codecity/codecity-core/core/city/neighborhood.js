@@ -72,6 +72,45 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		return matriz_predios;
 	}
 
+	self.getWidth = function(){
+		var buildings = matriz_buildings;
+		var sum_width = 0;
+		var line_width = 0;
+		for( i = 0; i < self.num_buildings_per_line(); i++ ){
+			
+			line_width = 0;
+		  
+		  for( j = 0; j < self.num_buildings_per_line(); j++ ){
+		  	if(buildings[i][j] !== undefined){
+		  		line_width += buildings[i][j].side();
+		  	}
+		  }
+
+		  if(line_width > sum_width) sum_width = line_width;
+		}
+
+		return sum_width;
+	}
+
+
+	self.getHeight = function(){
+		var buildings = matriz_buildings;
+		var sum_width = 0;
+		var line_width = 0;
+		for( i = 0; i < self.num_buildings_per_line(); i++ ){
+			line_width = 0;
+		  for( j = 0; j < self.num_buildings_per_line(); j++ ){
+		  	if(buildings[j][i] !== undefined){
+		  		line_width += buildings[j][i].side();
+		  	}
+		  }
+
+		  if(line_width > sum_width) sum_width = line_width;
+		}
+
+		return sum_width;
+	}
+
 	self.getMatrizBuildings = function(){
 		return matriz_buildings;
 	}

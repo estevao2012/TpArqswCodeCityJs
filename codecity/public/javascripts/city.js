@@ -126,6 +126,76 @@ function add_cube(largura, altura, profundidade, level, posx, posz, relative){
 	scene.add( cube );		
 }
 
+
+function add_neighbor(largura, altura, profundidade, level, posx, posz, relative){
+
+	var set_position_top_left = function(posx, posz){
+		var _posx = ((-FLOOR_WIDTH/2)+(largura/2)) + posx;
+		var _posy =  altura/2;
+		var _posz = ((-FLOOR_HEIGHT/2)+(profundidade/2)) + posz;
+
+		return [_posx, _posy, _posz];
+	} 
+
+	var set_position_bottom_left = function(_posx, _posz){
+		var _posx = ((-FLOOR_WIDTH/2)+(largura/2)) + _posx;
+		var _posy =  altura/2;
+		var _posz = ((FLOOR_HEIGHT/2)-(profundidade/2)) - _posz;
+
+		return [_posx, _posy, _posz];
+	} 
+
+	var set_position_top_right = function(_posx, _posz){
+		var _posx = ((FLOOR_WIDTH/2)-(largura/2)) - _posx;
+		var _posy =  altura/2;
+		var _posz = ((-FLOOR_HEIGHT/2)+(profundidade/2)) + _posz;
+
+		return [_posx, _posy, _posz];
+	} 
+
+	var set_position_bottom_right = function(_posx, _posz){
+		var _posx = ((FLOOR_WIDTH/2)-(largura/2)) - _posx;
+		var _posy =  altura/2;
+		var _posz = ((FLOOR_HEIGHT/2)-(profundidade/2)) - _posz;
+
+		return [_posx, _posy, _posz];
+	} 
+
+	var set_position_center = function(_posx, _posz){
+		var _posx = 0 + _posx;
+		var _posy =  altura/2;
+		var _posz = 0 + _posz;
+
+		return [_posx, _posy, _posz];
+	} 
+
+	if(relative == 0) pos_base = set_position_top_left(posx, posz);
+	if(relative == 1) pos_base = set_position_bottom_left(posx, posz);
+	if(relative == 2) pos_base = set_position_top_right(posx, posz);
+	if(relative == 3) pos_base = set_position_bottom_right(posx, posz);
+	if(relative == 4) pos_base = set_position_center(posx, posz);
+
+	// Create an array of materials to be used in a cube, one for each side
+	var cubeMaterialArray = [];
+	// order to add materials: x+,x-,y+,y-,z+,z-
+	cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: "#f9f9f9", vertexColors: "#000000" } ) );
+	cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: "#f9f9f9", vertexColors: "#000000" } ) );
+	cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: "#f9f9f9", vertexColors: "#000000" } ) );
+	cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: "#f9f9f9", vertexColors: "#000000" } ) );
+	cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: "#f9f9f9", vertexColors: "#000000" } ) );
+	cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: "#f9f9f9", vertexColors: "#000000" } ) );
+	var cubeMaterials = new THREE.MeshFaceMaterial( cubeMaterialArray );
+	// Cube parameters: width (x), height (y), depth (z), 
+	//        (optional) segments along x, segments along y, segments along z
+	var cubeGeometry = new THREE.CubeGeometry( largura, altura, profundidade, 1, 1, 1 );
+
+	// using THREE.MeshFaceMaterial() in the constructor below
+	//   causes the mesh to use the materials stored in the geometry
+	var cube = new THREE.Mesh( cubeGeometry, cubeMaterials );
+	cube.position.set(pos_base[0], pos_base[1], pos_base[2]);
+	scene.add( cube );		
+}
+
 function getRandomColor(level) {
 		level = level+1;
     var letters = '0123456789ABCDEF'.split('');
@@ -260,5 +330,5 @@ function configure_floor_sky(){
 	// scene.add(skyBox);
 	
 	// fog must be added to scene before first render
-	scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
+	// scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
 }
