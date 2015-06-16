@@ -10,19 +10,10 @@ var codecity    = require("../codecity-core/index.js");
 router.get('/', function(req, res, next) {
 
 	var city = new City();
-	var project_folders = __dirname + "/../public" + "/testes";
-
-	// city = codecity.execute(city, project_folders + "jquery/src/ajax.js");
-	// fs.readdir(, function(err, items) {
-	//     console.log(items);
-
-	//     for (var i=0; i<items.length; i++) {
-	//         console.log(items[i]);
-	//     }
-	// });
+	var project_folders = __dirname + "/../public/testes";
 	
 	//Jquery
-	p = project_folders + "/angular.js/src/";
+	p = project_folders + "/reveal.js/js";
 
 
 

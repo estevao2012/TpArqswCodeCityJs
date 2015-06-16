@@ -38,7 +38,7 @@ block content
             ="add_neighbor(" + width_neightbor + "," + 0.2 + ", " + height_neightbor + ",  0, " + horizontal_position + ", " + vertical_position + ", 0);"
           -}
 
-          -if(buildings[i][j] !== undefined){
+          -if(buildings !== undefined && buildings[i] !== undefined && buildings[i][j] !== undefined){
             -build  = buildings[i][j];
             -side   = build.side();
             -height = build.height() * 2;

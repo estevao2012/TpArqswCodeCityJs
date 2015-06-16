@@ -59,14 +59,14 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 	}
 
 	self.num_lines_of_neighbor = function(){
-		var buildings   = matriz_buildings;
+		var builds      = matriz_buildings;
 		var count_lines = 0;
 		var success     = false;
 		for( i = 0; i < self.num_buildings_per_line(); i++ ){
 		  success = false;
 
 		  for( j = 0; j < self.num_buildings_per_line(); j++ ){
-		  	if(buildings[i][j] !== undefined){
+		  	if(builds !== undefined && builds[i] !== undefined && builds[i][j] !== undefined){
 		  		success = true;
 		  	}
 		  }
@@ -78,27 +78,29 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		return count_lines;
 	}
 
+	var listToMatrix = function(list, elementsPerSubArray) {
+	    var matrix = [], i, k;
+
+	    for (i = 0, k = -1; i < list.length; i++) {
+	        if (i % elementsPerSubArray === 0) {
+	            k++;
+	            matrix[k] = [];
+	        }
+
+	        matrix[k].push(list[i]);
+	        // console.log(matrix);
+	    }
+
+	    return matrix;
+	}
+
 	var position_buildings = function(){
-		var num_buildings  = self.num_buildings_per_line();
-		var matriz_predios = [];
-		var pointer = 0;
-
-		for(i = 0; i < num_buildings; i++){
-			matriz_predios[i] = [];
-			for(j = 0; j < num_buildings; j++ ){
-				// if(pointer < buildings.length){
-					if(buildings[i+j] !== undefined)
-						matriz_predios[i][j] = buildings[i+j];
-					// pointer++;
-				// }
-			}
-		}
-
-		return matriz_predios;
+		var num_buildings = self.num_buildings_per_line();
+		return listToMatrix(buildings, num_buildings);
 	}
 
 	self.getWidth = function(){
-		var buildings  = matriz_buildings;
+		var builds  = matriz_buildings;
 		var sum_width  = 0;
 		var line_width = 0;
 
@@ -107,8 +109,8 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 			line_width = 0;
 		  
 		  for( j = 0; j < self.num_buildings_per_line(); j++ ){
-		  	if(buildings[i][j] !== undefined){
-		  		line_width += buildings[i][j].side();
+		  	if(builds !== undefined && builds[i] !== undefined && builds[i][j] !== undefined ){
+		  		line_width += builds[i][j].side();
 		  	}
 		  }
 
@@ -120,15 +122,15 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 
 
 	self.getHeight = function(){
-		var buildings = matriz_buildings;
+		var builds = matriz_buildings;
 		var sum_width = 0;
 		var line_width = 0;
 
 		for( i = 0; i < self.num_buildings_per_line(); i++ ){
 			line_width = 0;
 		  for( j = 0; j < self.num_buildings_per_line(); j++ ){
-		  	if(buildings[j][i] !== undefined){
-		  		line_width += buildings[j][i].side();
+		  	if(builds !== undefined && builds[j] !== undefined && builds[j][i] !== undefined ){
+		  		line_width += builds[j][i].side();
 		  	}
 		  }
 
