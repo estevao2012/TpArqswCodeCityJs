@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 	// });
 	
 	//Jquery
-	p = project_folders + "/Respond/src/";
+	p = project_folders + "/angular.js/src/";
 
 
 

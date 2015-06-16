@@ -86,10 +86,11 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		for(i = 0; i < num_buildings; i++){
 			matriz_predios[i] = [];
 			for(j = 0; j < num_buildings; j++ ){
-				if(pointer < buildings.length){
-					matriz_predios[i][j] = buildings[pointer];
-					pointer++;
-				}
+				// if(pointer < buildings.length){
+					if(buildings[i+j] !== undefined)
+						matriz_predios[i][j] = buildings[i+j];
+					// pointer++;
+				// }
 			}
 		}
 
@@ -114,8 +115,6 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 		  if(line_width > sum_width) sum_width = line_width;
 		}
 
-		console.log(sum_width);
-
 		return sum_width;
 	}
 
@@ -135,8 +134,6 @@ module.exports = function Neighborhood(_filename, _code, _ast){
 
 		  if(line_width > sum_width) sum_width = line_width;
 		}
-
-		console.log(sum_width);
 		return sum_width;
 	}
 

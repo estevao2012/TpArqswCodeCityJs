@@ -15,6 +15,11 @@ block content
     -city.getNeighbors().forEach(function(neighbor, inos){
       
       -buildings = neighbor.getMatrizBuildings();
+      -num_buildings_per_line = neighbor.num_buildings_per_line();
+      -num_lines_of_neighbor  = neighbor.num_lines_of_neighbor();
+
+      -width_neightbor = (neighbor.getWidth() + (num_buildings_per_line * 6));
+      -height_neightbor = (neighbor.getHeight() + (num_lines_of_neighbor * 6));
 
       -if(vertical_position > 1000 ){
         -base_horizontal_line_pos += max_width_neighbor;
@@ -22,18 +27,14 @@ block content
         -max_width_neighbor = 0;
       -} 
 
-      -if(neighbor.getWidth() > max_width_neighbor){
-        -max_width_neighbor = neighbor.getWidth();
+      -if(width_neightbor > max_width_neighbor){
+        -max_width_neighbor = width_neightbor;
       -}
 
-      -num_buildings_per_line = neighbor.num_buildings_per_line()
-      -num_lines_of_neighbor  = neighbor.num_lines_of_neighbor()
 
       -for( i = 0; i < neighbor.num_buildings_per_line(); i++ ){
         -for( j = 0; j < neighbor.num_buildings_per_line(); j++ ){
           -if(i == 0 && j == 0){
-            -width_neightbor = (neighbor.getWidth() + (num_buildings_per_line * 6));
-            -height_neightbor = (neighbor.getHeight() + (num_lines_of_neighbor * 6));
             ="add_neighbor(" + width_neightbor + "," + 0.2 + ", " + height_neightbor + ",  0, " + horizontal_position + ", " + vertical_position + ", 0);"
           -}
 
